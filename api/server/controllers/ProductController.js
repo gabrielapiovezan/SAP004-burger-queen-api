@@ -28,31 +28,9 @@ class ProductController {
       return util.send(res);
     }
   }
-  static async updateProduct(req, res) {
-    const alteredProduct = req.body;
-    const { id } = req.params;
-    if (!Number(id)) {
-      util.setError(400, "Please input a valid numeric value");
-      return util.send(res);
-    }
-    try {
-      const updateProduct = await ProductService.updateProduct(
-        id,
-        alteredProduct
-      );
-      if (!updateProduct) {
-        util.setError(404, `Cannot find product with the id: ${id}`);
-      } else {
-        util.setSuccess(200, "Product updated", updateProduct);
-      }
-      return util.send(res);
-    } catch (error) {
-      util.setError(404, error);
-      return util.send(res);
-    }
-  }
+
   static async deleteProduct(req, res) {
-    const { id } = req.params;
+    const { id } = req.body.id;
 
     if (!Number(id)) {
       util.setError(400, "Please provide a numeric value");
@@ -62,10 +40,10 @@ class ProductController {
     try {
       const productToDelete = await ProductService.deleteProduct(id);
 
-      if (productToDelete) {
-        util.setSuccess(200, "Product deleted");
+      if (productoDelete) {
+        util.setSuccess(200, "Author deleted");
       } else {
-        util.setError(404, `Product with the id ${id} cannot be found`);
+        util.setError(404, `Author with the id ${id} cannot be found`);
       }
       return util.send(res);
     } catch (error) {

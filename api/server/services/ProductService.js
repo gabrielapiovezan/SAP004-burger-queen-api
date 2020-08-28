@@ -15,49 +15,21 @@ class ProductService {
       throw error;
     }
   }
-  static async updatedAuthor(req, res) {
-    const alteredProduct = req.body;
-    const { id } = req.params;
-    if (!Number(id)) {
-      util.setError(400, "Please input a valid numeric value");
-      return util.send(res);
-    }
+  static async delete(id) {
     try {
-      const updateProduct = await ProductService.updateProduct(
-        id,
-        alteredProduct
-      );
-      if (!updateProduct) {
-        util.setError(404, `Cannot find Product with the id: ${id}`);
-      } else {
-        util.setSuccess(200, "Product updated", updateProduct);
-      }
-      return util.send(res);
-    } catch (error) {
-      util.setError(404, error);
-      return util.send(res);
-    }
-  }
-  static async deleteProduct(req, res) {
-    const { id } = req.params;
-
-    if (!Number(id)) {
-      util.setError(400, "Please provide a numeric value");
-      return util.send(res);
-    }
-
-    try {
-      const productDelete = await ProductService.deleteProduct(id);
+      const productToDelete = await database.Product.findOne({
+        where: { id: Number(id) },
+      });
 
       if (productToDelete) {
-        util.setSuccess(200, "Product deleted");
-      } else {
-        util.setError(404, `Product with the id ${id} cannot be found`);
+        const deletedProduct = await database.Product.destroy({
+          where: { id: Number(id) },
+        });
+        return deletedProduct;
       }
-      return util.send(res);
+      return null;
     } catch (error) {
-      util.setError(400, error);
-      return util.send(res);
+      throw error;
     }
   }
 }
