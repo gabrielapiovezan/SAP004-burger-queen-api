@@ -1,10 +1,10 @@
-version: '3.4'
+version: "3.4"
 
 services:
   dev:
     image: node:12-alpine
     container_name: bq-api-node
-    command:  npm run dev
+    command: sh -c "npm run migrate && npm run dev"
     working_dir: /app
     ports:
       - "3000:3000"
@@ -18,8 +18,7 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=example
+      - POSTGRES_HOST_AUTH_METHOD=tru
     container_name: bq-api-node_db
     ports:
       - "5432:5432"
