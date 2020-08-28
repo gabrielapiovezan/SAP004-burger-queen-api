@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       table: DataTypes.INTEGER,
       client: DataTypes.STRING,
       waiter: DataTypes.STRING,
+      items: DataTypes.VIRTUAL,
     },
     {}
   );
