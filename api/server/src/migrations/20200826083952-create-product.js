@@ -17,7 +17,7 @@ module.exports = {
       has_extra: {
         type: Sequelize.BOOLEAN,
       },
-      is_burguer: {
+      is_burger: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {
